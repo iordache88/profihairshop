@@ -9,11 +9,7 @@ use yii\helpers\Url;
     <input type="hidden" name="page" value="<?= $post['page'] ?>" />
 
     <div class="modal-header">
-
         <h4 class="modal-title text-center w-100">Upload layout from JSON file</h4>
-        <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
     </div>
 
     <div class="modal-body">
