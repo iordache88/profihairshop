@@ -174,12 +174,16 @@ $page_types = PageType::find()->andWhere(['status' => 10])->all();
     </div>
 
     <div id="modal_builder" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-xl"></div>
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        </div>
     </div>
 
-    <div class="loading" style="display: none;">
-        <div class="loading-inner">
-            <div class="loading-icon"></div>
+    <div id="modalLayout" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+            </div>
         </div>
     </div>
 
@@ -191,6 +195,11 @@ $page_types = PageType::find()->andWhere(['status' => 10])->all();
         </div>
     </div>
 
+    <div class="loading" style="display: none;">
+        <div class="loading-inner">
+            <div class="loading-icon"></div>
+        </div>
+    </div>
 
     <?php $this->endBody() ?>
 </body>

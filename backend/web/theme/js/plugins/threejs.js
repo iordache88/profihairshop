@@ -12856,7 +12856,7 @@
           vC = this.vertices[face.c];
 
           cb.subVectors(vC, vB);
-          ab.subVectors(vA,  B);
+          ab.subVectors(vA, vB);
           cb.cross(ab);
 
           vertices[face.a].add(cb);

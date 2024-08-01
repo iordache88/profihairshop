@@ -9,10 +9,10 @@ if (!empty($data)) {
             if ($idCol == 'opt') {
                 $background = NULL;
                 if ($col->background_type == 'image') {
-                    $background = 'background: url(\'/uploads/' . $col->background_info . '\');';
+                    $background = 'background-image: url(' . \common\models\Media::showImg($col->background_info) . ');';
                 } else {
                     if (!empty($col->background_info)) {
-                        $background = 'background: ' . $col->background_info . ';';
+                        $background = 'background-color: ' . $col->background_info . ';';
                     }
                 }
 
@@ -52,10 +52,10 @@ if (!empty($data)) {
             $background = NULL;
             if ($idCol != 'opt') {
                 if ($col->background_type == 'image') {
-                    $background = 'background: url(/uploads/' . $col->background_info . ');';
+                    $background = 'background-image: url(' . \common\models\Media::showImg($col->background_info) . ');';
                 } else {
                     if (!empty($col->background_info)) {
-                        $background = 'background: ' . $col->background_info . ';';
+                        $background = 'background-color: ' . $col->background_info . ';';
                     }
                 }
 

@@ -95,20 +95,25 @@ if ($action == 'edit') {
                             </span>
                         </div>
 
-                        <div class="input-group input-group-outline" data-bs-toggle="modal" data-bs-target="#modalMedia" data-trigger="row_<?= $page . $item; ?>">
-                            <label class="w-100">Background image url</label>
-                            <?php 
-                            $no_image_src       = Tools::adminNoImageSrc();
-                            $uploaded_image_src = Media::showImg($bgImage);
+                        <div class="from-group set set-image hide">
+                            <label class="w-100">Background image</label>
+                            <div class="upload-image-box">
+                                <a href="#" data-bs-toggle="modal-multiple" data-bs-toggle="modal" data-bs-target="#modalMedia" data-trigger="row_<?= $page . $item; ?>">
+                                    <?php 
+                                    $no_image_src       = Tools::adminNoImageSrc();
+                                    $uploaded_image_src = Media::showImg($bgImage);
 
-                            if(empty($uploaded_image_src)) {
-                                $image_src = $no_image_src;
-                            } else {
-                                $image_src = $uploaded_image_src;
-                            }
-                            ?>
-                            <input type="hidden" name="" class="form-control input input_image" value="<?= $bgImage ?>">
-                            <div class="featured_preview"><img src="<?= $image_src; ?>"></div>
+                                    if(empty($uploaded_image_src)) {
+                                        $image_src = $no_image_src;
+                                    } else {
+                                        $image_src = $uploaded_image_src;
+                                    }
+                                    ?>
+                                    <img src="<?= $image_src; ?>" class="img-fluid" />
+                                </a>
+                                <input type="hidden" name="" class="form-control input input_image" value="<?= $bgImage ?>">
+                                <div class="upload-image-overlay"><span><i class="fas fa-edit"></i>&nbsp;Change...</span></div>
+                            </div>
                         </div>
                     </div>
                 </div>

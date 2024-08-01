@@ -791,7 +791,7 @@ function savetolibrary(item, type, action) {
 
     $.ajax({
         type: "POST",
-        url: "/backend/web/index.php?r=site%2Fsavetolibrary&item=" + item + "&type=" + type + "&action=" + action + '&page=' + pageID,
+        url: "/backend/web/builder/savetolibrary?item=" + item + "&type=" + type + "&action=" + action + '&page=' + pageID,
         data: "HTML", // serializes the form's elements.
         success: function (data) {
             $('#modalLayout .modal-content').html(data);
@@ -1679,3 +1679,5 @@ $(document).on('click', '.btn-remove-fickle-image, .btn-remove-fickle-background
     btn.remove();
     
 });
+
+

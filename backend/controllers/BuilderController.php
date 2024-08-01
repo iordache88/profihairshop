@@ -6,16 +6,9 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use yii\data\Pagination;
-use backend\models\Settings;
-use backend\models\Pages;
-use backend\models\Menu;
-use backend\models\Media;
-use backend\models\Layouts;
-use backend\models\Categories;
-use backend\models\CategoriesRelations;
-use common\models\Customfieldrelations;
-use common\models\Customfield;
+use common\models\Page;
+use common\models\Layout;
+
 
 class BuilderController extends Controller
 {
@@ -29,7 +22,7 @@ class BuilderController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index', 'content', 'modal', 'addlayoutelement', 'row', 'column', 'module', 'getmodule', 'savemodule', 'actionmodule', 'sort', 'generatevideothumb', 'layout', 'uploadlayout', 'convert', 'modulecategory', 'modulefield', 'modulefield-valueoptions', 'checksession', 'exportlayout'],
+                        'actions' => ['index', 'content', 'modal', 'addlayoutelement', 'row', 'column', 'module', 'getmodule', 'savemodule', 'actionmodule', 'sort', 'generatevideothumb', 'layout', 'uploadlayout', 'convert', 'modulecategory', 'modulefield', 'modulefield-valueoptions', 'checksession', 'exportlayout', 'savetolibrary'],
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
@@ -541,7 +534,7 @@ class BuilderController extends Controller
         $module = $request['module'];
 
         if ($action == 'load') {
-            $layout = Layouts::find()->where(['ID' => $request['layout']])->one();
+            $layout = Layout::find()->where(['id' => $request['layout']])->one();
 
             if ($layout->render == 'page') {
                 $pageLayout = json_decode($layout->data, true);
@@ -553,7 +546,8 @@ class BuilderController extends Controller
             }
             return $this->renderPartial('_core/builder', ['content' => json_encode($_SESSION['layout' . $page], false), 'pageID' => $page]);
         } else {
-            $layouts = Layouts::find()->all();
+
+            $layouts = Layout::find()->all();
         }
 
 
@@ -586,6 +580,40 @@ class BuilderController extends Controller
         return json_encode([
             'render' => $render
         ]);
+    }
+
+
+    public function actionSavetolibrary($item, $type, $action, $page, $elementTitle = false)
+    {
+        if ($action == 'show') {
+
+            return $this->renderPartial('_core/_savetolibrary', ['item' => $item, 'page' => $page, 'type' => $type]);
+
+        } elseif ($action == 'save') {
+
+            if ($type == 'section') {
+
+                $_SESSION['savetolibrary'] = [];
+                $_SESSION['savetolibrary'][] = $_SESSION['layout' . $page][$item];
+
+            } else {
+
+                $_SESSION['savetolibrary'] = $_SESSION['layout' . $page];
+            }
+
+            $section = new Layout();
+            $section->title = $elementTitle;
+            $section->data = json_encode($_SESSION['savetolibrary'], JSON_FORCE_OBJECT);
+            $section->render = $type;
+
+            if ($section->save()) {
+                
+                return '<div class="modal-body text-center">Success! The <b>' . $elementTitle . '</b> ' . $type . ' was saved to library</div>';
+            } else {
+                return '<div class="modal-body text-center">Failed. ' . json_encode($section->errors) . '</div>';
+            }
+        }
+        return;
     }
 
 
@@ -640,41 +668,7 @@ class BuilderController extends Controller
         return $this->renderPartial('_core/builder', ['content' => json_encode($_SESSION['layout' . $post['idPage']], false), 'pageID' => $post['idPage']]);
     }
 
-    public function actionModulecategory()
-    {
-        $post = Yii::$app->request->post();
-        $response = '<option value=""></option>';
-        $response .= '<option value="all" disabled="">---All categories (coming soon...)</option>';
-        $categories = Categories::findAll(['target' => $post['type'], 'status' => 1]);
-        foreach ($categories as $category) {
-            $response .= '<option value="' . $category->ID . '">' . $category->title . '</option>';
-        }
 
-        return $response;
-    }
-
-    public function actionModulefield()
-    {
-        $post = Yii::$app->request->post();
-        $response = '<option value=""></option>';
-        $fields = Customfield::findAll(['target' => $post['type'], 'ID_parent' => null, 'status' => 1]);
-        foreach ($fields as $field) {
-            $response .= '<option value="' . $field->ID . '">' . $field->title . '</option>';
-        }
-
-        return $response;
-    }
-
-    public function actionModulefieldValueoptions()
-    {
-        $post = Yii::$app->request->post();
-
-        $field = Customfield::findOne(['ID' => $post['field_id'], 'status' => 1]);
-
-        $response = $this->renderPartial('field/_value-options', ['field' => $field]);
-
-        return $response;
-    }
 
     public function actionChecksession()
     {

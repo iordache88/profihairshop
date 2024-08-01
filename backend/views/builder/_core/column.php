@@ -64,7 +64,7 @@ if ($action == 'edit') {
                         </div>
                         <div class="form-group  input-group input-group-outline color-picker">
                             <label class="w-100">Text color</label>
-                            <span class="colorpicker-input colorpicker-input--position-right">
+                            <span class="colorpicker-input colorpicker-input--position-right w-100">
                                 <input id="dc-ex<?= $idRow ?>-02" name="color" type="text" value="<?= $colorColumn ?>" class="form-control color-input">
                                 <span id="dc-ex<?= $idRow ?>-02-anchor" class="colorpicker-custom-anchor colorpicker-circle-anchor">
                                     <span class="colorpicker-circle-anchor__color" data-color></span>
@@ -113,20 +113,26 @@ if ($action == 'edit') {
                             </span>
                         </div>
 
-                        <div class="form-group  input-group input-group-outline set set-image multi hide" data-bs-toggle="modal" data-bs-target="#modalMedia" onclick="setupModal('multi');">
-                            <label class="w-100">Background image url</label>
-                            <?php
-                            $no_image_src       = Tools::adminNoImageSrc();
-                            $uploaded_image_src = Media::showImg($bgImage);
 
-                            if (empty($uploaded_image_src)) {
-                                $image_src = $no_image_src;
-                            } else {
-                                $image_src = $uploaded_image_src;
-                            }
-                            ?>
-                            <input type="hidden" name="" class="form-control input input_image" value="<?= $bgImage ?>">
-                            <div class="featured_preview"><img src="<?= $image_src; ?>"></div>
+                        <div class="from-group set set-image hide">
+                            <label class="w-100">Background image</label>
+                            <div class="upload-image-box">
+                                <a href="#" data-bs-toggle="modal-multiple" data-bs-toggle="modal" data-bs-target="#modalMedia" data-trigger="column_<?= $page . $item . $column; ?>">
+                                    <?php 
+                                    $no_image_src       = Tools::adminNoImageSrc();
+                                    $uploaded_image_src = Media::showImg($bgImage);
+
+                                    if(empty($uploaded_image_src)) {
+                                        $image_src = $no_image_src;
+                                    } else {
+                                        $image_src = $uploaded_image_src;
+                                    }
+                                    ?>
+                                    <img src="<?= $image_src; ?>" class="img-fluid" />
+                                </a>
+                                <input type="hidden" name="" class="form-control input input_image" value="<?= $bgImage ?>">
+                                <div class="upload-image-overlay"><span><i class="fas fa-edit"></i>&nbsp;Change...</span></div>
+                            </div>
                         </div>
                     </div>
 

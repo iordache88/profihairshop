@@ -26,6 +26,9 @@ $this->params['breadcrumbs'][] = 'Edit';
                     </div>
 
                     <div class="col align-self-center text-md-end">
+
+                        <button type="button" data-toggle="modal" data-target="#modalLayout" class="btn btn-sm btn-outline-danger" title="Add to library" onclick="savetolibrary('0', 'page','show')"><i class="fas fa-plus"></i> add to library</button>
+
                         <a class="btn btn-sm btn-outline-info" href="/<?= $model->slug; ?>" target="_blank"><i class="fas fa-eye"></i>&nbsp;View</a>
                     </div>
                 </div>
