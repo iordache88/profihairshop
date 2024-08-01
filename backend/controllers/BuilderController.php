@@ -695,7 +695,7 @@ class BuilderController extends Controller
     public function actionExportlayout($page = false)
     {
         $post = Yii::$app->request->post();
-        $pageData = Pages::findOne($page);
+        $pageData = Page::findOne($page);
 
         $filename = 'template-' . $_SERVER['HTTP_HOST'] . '-' . $pageData->slug;
         $json = json_encode($_SESSION['layout' . $page]);
