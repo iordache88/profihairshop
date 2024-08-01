@@ -1610,7 +1610,7 @@ $(document).on('click', '[data-field-remove]', function () {
 $(document).on('click', '[data-bs-target="#modalGeneral"]', function () {
     var action = $(this).data('action');
     var values = $(this).data('values');
-    var modal = $(this).data('target');
+    var modal = $(this).data('bs-target');
 
     if ($(this).data('modal')) {
         $(modal).find('.modal-dialog').attr('class', 'modal-dialog');
@@ -1620,13 +1620,14 @@ $(document).on('click', '[data-bs-target="#modalGeneral"]', function () {
 
     $.ajax({
         type: 'POST',
-        url: '/backend/web/index.php/?r=' + action,
+        url: '/backend/web/' + action,
         data: values,
         dataType: 'json',
         beforeSend: function () {
             $(modal).find('.modal-content').html('<div class="modal-body text-center"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div></div>');
         },
         success: function (response) {
+
             $(modal).find('.modal-content').html(response.render);
 
             if ($('#basicEditor').length) {

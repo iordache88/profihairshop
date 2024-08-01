@@ -564,7 +564,7 @@ class BuilderController extends Controller
             if ($extension == 'json') {
                 $fileContent = file_get_contents($_FILES["fileToUpload"]["tmp_name"]);
 
-                $page = Pages::findOne($post['page']);
+                $page = Page::findOne($post['page']);
                 $page->content = $fileContent;
                 $page->save();
 
@@ -573,7 +573,7 @@ class BuilderController extends Controller
                 Yii::$app->session->setFlash('danger', 'Your file is not a JSON file.');
             }
 
-            return $this->redirect('/backend/web/index.php?r=page%2Fedit&id=' . $post['page']);
+            return $this->redirect([$page->type . '/edit', 'id' => $post['page']]);
         }
 
         $render = $this->renderPartial('_core/_uploadlayout', ['post' => $post]);
