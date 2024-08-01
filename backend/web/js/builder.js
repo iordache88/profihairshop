@@ -155,7 +155,7 @@ function sendSort(target, page, item, parents, order) {
     $.ajax({
         type: "POST",
         url: "/backend/web/builder/sort",
-        data: { target: target, page: page, parents: parents, sort: sort },
+        data: { target: target, page: page, parents: parents, sort: sort, '_csrf-backend': $('[name="csrf-token"]').attr('content') },
         dataType: "html",
         success: function (data) {
             // console.log(data);
@@ -791,7 +791,7 @@ function savetolibrary(item, type, action) {
 
     $.ajax({
         type: "POST",
-        url: "/backend/web/builder/savetolibrary?item=" + item + "&type=" + type + "&action=" + action + '&page=' + pageID,
+        url: "/backend/web/builder/savetolibrary?item=" + item + "&type=" + type + "&action=" + action + '&page=' + pageID + '&_csrf-backend=' + $('[name="csrf-token"]').attr('content'),
         data: "HTML", // serializes the form's elements.
         success: function (data) {
             $('#modalLayout .modal-content').html(data);
@@ -811,7 +811,7 @@ function savetolibraryform() {
 
         $.ajax({
             type: "POST",
-            url: url + '&page=' + pageID + '&elementTitle=' + elementTitle,
+            url: url + '&page=' + pageID + '&elementTitle=' + elementTitle + '&_csrf-backend=' + $('[name="csrf-token"]').attr('content'),
             data: "HTML", // serializes the form's elements.
             success: function (data) {
                 $('#modalLayout .modal-content').html(data);
@@ -886,7 +886,7 @@ if ($('#postEditor').length) {
 function layoutHistory(id) {
     $.ajax({
         type: "POST",
-        url: '/backend/web/index.php?r=site%2Fhistory&id=' + id + '&type=show',
+        url: '/backend/web/index.php?r=site%2Fhistory&id=' + id + '&type=show' + '&_csrf-backend=' + $('[name="csrf-token"]').attr('content'),
         data: "HTML", // serializes the form's elements.
         success: function (data) {
             $('#historyModal .modal-content').html(data);
@@ -906,7 +906,7 @@ function formRestoreHistory() {
             url: url,
             data: "HTML", // serializes the form's elements.
             success: function (data) {
-                console.log(data);
+
                 $('#layout_content').html(data);
                 $('.modal').modal('hide');
                 $('.modal-backdrop').remove();

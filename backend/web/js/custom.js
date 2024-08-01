@@ -110,6 +110,7 @@ $(document).ready(function () {
             type: "POST",
             url: url,
             data: {
+                '_csrf-backend': $('[name="csrf-token"]').attr('content'),
                 id: id,
                 attr: attr,
                 value: value,
